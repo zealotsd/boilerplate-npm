@@ -9,13 +9,20 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 
+
+// console.log('hello world111')
+// console.log('process', process.cwd())
+
+
+
+
+
 if (!process.env.DISABLE_XORIGIN) {
+  console.log('hello world3');
   app.use(function(req, res, next) {
-    console.log('req', req);
     var allowedOrigins = ['https://narrow-plane.gomix.me', 'https://www.freecodecamp.com'];
     var origin = req.headers.origin || '*';
     if(!process.env.XORIG_RESTRICT || allowedOrigins.indexOf(origin) > -1){
-         console.log(origin);
          res.setHeader('Access-Control-Allow-Origin', origin);
          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     }
@@ -24,6 +31,8 @@ if (!process.env.DISABLE_XORIGIN) {
 }
 //test
 app.use('/public', express.static(process.cwd() + '/public'));
+app.use('/static', express.static(process.cwd() + '/views/stats-preview-card/static'));
+
 
 app.route('/_api/package.json')
   .get(function(req, res, next) {
